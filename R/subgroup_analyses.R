@@ -95,7 +95,7 @@ subgroup.CFsurvfit <- function(fit, subgroup.inds, conf.band=TRUE, conf.level=.9
     treat <- fit$data$treat[subgroup.inds]
     fit.treat <- fit$fit.treat
     #g.hats <- fit$g.hats[subgroup.inds]
-    
+    nuis <- fit$nuisance
     g.hats.pred <- fit$nuisance$prop.pred[subgroup.inds]
 
     #### ESTIMATE CF SURVIVALS ####
