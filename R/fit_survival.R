@@ -477,7 +477,7 @@ CFsurvival.nuisance.options <- function(cross.fit = TRUE, V = ifelse(cross.fit, 
     G.hats <- G.hats[,ord]
 
     int.vals <- t(sapply(1:n, function(i) {
-        vals <- diff(1/S.hats[i,])* 1/ G.hats[i,-ncol(G.hats)]
+        vals <- diff(1/S.hats[i,])* 1/ G.hats[i,-one.of(ncol(G.hats))]
         if(any(eval.times[-1] > Y[i])) vals[eval.times[-1] > Y[i]] <- 0
         c(0,cumsum(vals))
     }))
