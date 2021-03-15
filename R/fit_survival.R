@@ -468,7 +468,7 @@ CFsurvival.nuisance.options <- function(cross.fit = TRUE, V = ifelse(cross.fit, 
     }
 }
 
-.get.survival <- function(Y, Delta, A, fit.times, eval.times, S.hats, G.hats, g.hats, isotonize=TRUE) {
+.get.survival <- function(Y, Delta, A, fit.times, eval.times, S.hats, G.hats, g.hats, isotonize=TRUE, ...) {
     fit.times <- fit.times[fit.times > 0]
     n <- length(Y)
     ord <- order(eval.times)
