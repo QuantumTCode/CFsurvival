@@ -95,6 +95,8 @@ subgroup.CFsurvfit <- function(fit, subgroup.inds, conf.band=TRUE, conf.level=.9
     treat <- fit$data$treat[subgroup.inds]
     fit.treat <- fit$fit.treat
     g.hats <- fit$g.hats[subgroup.inds]
+    
+    nuis <- fit$nuisance
 
     #### ESTIMATE CF SURVIVALS ####
     surv.df <- data.frame()
@@ -103,7 +105,7 @@ subgroup.CFsurvfit <- function(fit, subgroup.inds, conf.band=TRUE, conf.level=.9
     if(1 %in% fit.treat) {
         S.hats.1 <-fit$S.hats.1[subgroup.inds,]
         G.hats.1 <-fit$G.hats.1[subgroup.inds,]
-        surv.1 <- .get.survival(Y=time, Delta=event, A=treat, fit.times=fit.times, eval.times=fit.times, S.hats=S.hats.1, G.hats=G.hats.1, g.hats=g.hats)
+        surv.1 <- .get.survival(Y=time, Delta=event, A=treat, fit.times=fit.times, eval.times=nuis$eval.times, S.hats=nuis$event.pred.1, G.hats=nuis$cens.pred.1, g.hats=nuis$prop.pred)
         surv.df.1 <- data.frame(time=c(0,fit.times), trt=1, surv=c(1, surv.1$surv))
         result$IF.vals.1 <- surv.1$IF.vals
 
@@ -124,7 +126,7 @@ subgroup.CFsurvfit <- function(fit, subgroup.inds, conf.band=TRUE, conf.level=.9
     if(0 %in% fit.treat) {
         S.hats.0 <-fit$S.hats.0[subgroup.inds,]
         G.hats.0 <-fit$G.hats.0[subgroup.inds,]
-        surv.0 <- .get.survival(Y=time, Delta=event, A=1-treat, fit.times=fit.times, eval.times=fit.times, S.hats=S.hats.0, G.hats=G.hats.0, g.hats=1-g.hats)
+        surv.0 <- .get.survival(Y=time, Delta=event, A=1-treat, fit.times=fit.times, eval.times=nuis$eval.times, S.hats=nuis$event.pred.0, G.hats=nuis$cens.pred.0, g.hats=1-nuis$prop.pred)
         surv.df.0 <- data.frame(time=c(0,fit.times), trt=0, surv=c(1, surv.0$surv))
         result$IF.vals.0 <- surv.0$IF.vals
 
